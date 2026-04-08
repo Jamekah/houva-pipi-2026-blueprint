@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Houva Pipi NC · 2026 Season Blueprint</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#f2f5fa;--surf:#ffffff;--card:#f8f9fc;--card2:#edf0f7;
+  --border:#d8dfe9;--text:#1a2540;--muted:#5a6a8a;
+  --mc1:#0ea271;--mc2:#2d74dc;--mc3:#d4870a;--mc4:#d63b3b;--mc5:#9333ea;--finals:#0497b8;
+  --deload:#e4e9f2;--gold:#c8870a;--radius:10px;
+  --ease:cubic-bezier(0.4,0,0.2,1);
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.6;min-height:100vh}
+h1,h2,h3,h4,.condensed{font-family:'Barlow Condensed',sans-serif;letter-spacing:0.02em}
+a{color:inherit;text-decoration:none}
+
+/* HEADER */
+header{background:var(--surf);border-bottom:1px solid var(--border);padding:0 28px;display:flex;align-items:center;justify-content:space-between;height:58px;position:sticky;top:0;z-index:200;backdrop-filter:blur(12px)}
+.logo{display:flex;align-items:center;gap:11px}
+.logo-icon{width:34px;height:34px;background:linear-gradient(135deg,var(--mc1) 0%,var(--mc2) 100%);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:15px;color:#fff;flex-shrink:0}
+.logo-text{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:17px}
+.logo-text em{color:var(--gold);font-style:normal}
+nav{display:flex;gap:2px}
+nav a{color:var(--muted);padding:6px 12px;border-radius:6px;font-size:12px;transition:all 0.2s;white-space:nowrap}
+nav a:hover{background:var(--card2);color:var(--text)}
+
+/* HERO */
+.hero{padding:44px 28px 32px;background:var(--surf);border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-80px;right:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(14,162,113,0.09) 0%,transparent 65%);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:-60px;left:30%;width:300px;height:300px;background:radial-gradient(circle,rgba(45,116,220,0.07) 0%,transparent 65%);pointer-events:none}
+.hero-inner{max-width:1160px;margin:0 auto}
+.hero h1{font-size:52px;font-weight:800;line-height:1;margin-bottom:6px}
+.hero h1 em{color:var(--gold);font-style:normal}
+.hero .subtitle{color:var(--muted);font-size:13px;margin-bottom:28px}
+.stats-row{display:flex;gap:12px;flex-wrap:wrap}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px 18px;min-width:110px}
+.stat-num{font-family:'Barlow Condensed',sans-serif;font-size:34px;font-weight:800;color:var(--gold);line-height:1}
+.stat-num small{font-size:16px;color:var(--muted)}
+.stat-desc{color:var(--muted);font-size:11px;margin-top:2px}
+
+/* MAIN */
+main{max-width:1160px;margin:0 auto;padding:28px}
+section{margin-bottom:40px}
+.section-header{display:flex;align-items:center;gap:10px;margin-bottom:18px;flex-wrap:wrap}
+.section-header h2{font-size:22px;font-weight:700}
+.chip{background:var(--card2);border:1px solid var(--border);border-radius:20px;padding:3px 10px;font-size:11px;color:var(--muted);font-family:'DM Sans',sans-serif}
+.chip.clickable{cursor:pointer;transition:all 0.2s}
+.chip.clickable:hover{background:var(--card);color:var(--text)}
+
+/* TIMELINE WRAPPER */
+.timeline-wrapper{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:22px;overflow-x:auto}
+.tl-scroll{min-width:860px}
+.tl-labels{display:flex;gap:4px;margin-bottom:6px}
+.tl-label{flex:1;text-align:center;font-size:10px;color:var(--muted);font-family:'Barlow Condensed',sans-serif;font-weight:600}
+.tl-row{display:flex;gap:4px}
+.week-block{flex:1;min-width:36px;height:58px;border-radius:7px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;transition:transform 0.18s var(--ease),filter 0.18s,border-color 0.18s;border:2px solid transparent;position:relative}
+.week-block:hover{transform:translateY(-4px);filter:brightness(1.18);z-index:2}
+.week-block.active{border-color:#1a2540 !important;transform:translateY(-4px);filter:brightness(0.9);box-shadow:0 8px 28px rgba(0,0,0,0.18);z-index:3}
+.week-block.deload{background:var(--deload) !important}
+.wnum{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;color:#fff;line-height:1}
+.week-block.deload .wnum{color:#6b7ea0}
+.wbadge{font-size:8px;font-weight:700;background:rgba(0,0,0,0.28);border-radius:3px;padding:1px 4px;color:rgba(255,255,255,0.85);letter-spacing:0.05em;font-family:'Barlow Condensed',sans-serif;text-transform:uppercase}
+.phase-bar{display:flex;gap:4px;margin-top:8px}
+.phase-seg{border-radius:4px;padding:4px 6px;font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;text-align:center;white-space:nowrap;overflow:hidden}
+.tl-legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted)}
+.legend-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+
+/* MICROCYCLE PANEL */
+#mc-panel{display:none;margin-top:14px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:26px;animation:slideDown 0.28s var(--ease)}
+@keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.panel-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:20px;flex-wrap:wrap}
+.panel-top h3{font-size:30px;font-weight:700}
+.panel-focus{font-size:13px;color:var(--muted);margin-top:3px}
+.panel-right{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.pbadge{border-radius:20px;padding:4px 11px;font-size:12px;font-weight:600;font-family:'Barlow Condensed',sans-serif;letter-spacing:0.04em;white-space:nowrap}
+.btn-close{background:var(--surf);border:1px solid var(--border);color:var(--muted);border-radius:7px;padding:7px 14px;cursor:pointer;font-size:12px;font-family:'DM Sans',sans-serif;transition:all 0.18s}
+.btn-close:hover{background:var(--card2);color:var(--text)}
+.deload-banner{background:rgba(212,135,10,0.07);border:1px solid rgba(212,135,10,0.28);border-radius:8px;padding:12px 16px;font-size:12px;color:var(--muted);margin-bottom:20px;display:flex;align-items:flex-start;gap:10px}
+.deload-banner strong{color:var(--text)}
+
+/* DAY GRID */
+.day-grid{display:grid;grid-template-columns:1fr 1fr 1fr 2fr;gap:10px;margin-bottom:24px;align-items:stretch}
+@media(max-width:700px){.day-grid{grid-template-columns:1fr 1fr;}.rest-note{grid-column:1/-1}}
+.day-cell{background:var(--surf);border:1px solid var(--border);border-radius:8px;padding:11px 6px;text-align:center;transition:all 0.18s}
+.day-cell.is-training{cursor:pointer}
+.day-cell.is-training:hover{transform:translateY(-2px);border-color:rgba(0,0,0,0.22)}
+.day-cell.is-match{border-color:rgba(200,135,10,0.35);background:rgba(200,135,10,0.05)}
+.day-name{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;color:var(--muted);margin-bottom:8px;letter-spacing:0.05em}
+.day-icon{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 7px;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:13px}
+.day-type{font-size:11px;font-weight:500;line-height:1.3}
+.day-note{font-size:10px;color:var(--muted);margin-top:3px}
+.rest-note{background:var(--card2);border:1px solid var(--border);border-radius:8px;padding:16px 18px;display:flex;flex-direction:column;justify-content:center;gap:0}
+.rest-note-title{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:var(--muted);letter-spacing:0.05em;margin-bottom:10px;text-transform:uppercase}
+.rest-note-items{display:flex;flex-direction:column;gap:7px}
+.rest-note-items span{font-size:12px;color:var(--muted);line-height:1.4}
+
+/* SESSIONS */
+.sessions-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:640px){.sessions-grid{grid-template-columns:1fr}}
+.session-card{background:var(--surf);border:1px solid var(--border);border-radius:var(--radius);padding:20px;transition:outline 0.15s}
+.s-title{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;margin-bottom:3px}
+.s-sub{font-size:11px;color:var(--muted);margin-bottom:16px}
+.si{margin-bottom:11px}
+.si-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}
+.si-label{font-size:12px;font-weight:500}
+.si-time{font-family:'Barlow Condensed',sans-serif;font-size:13px;color:var(--muted)}
+.si-time span{font-size:10px}
+.si-bar{height:7px;background:rgba(0,0,0,0.07);border-radius:4px;overflow:hidden;margin-bottom:3px}
+.si-fill{height:100%;border-radius:4px}
+.si-desc{font-size:11px;color:var(--muted);line-height:1.4}
+.s-footer{margin-top:14px;padding-top:10px;border-top:1px solid var(--border);display:flex;justify-content:space-between;font-size:11px;color:var(--muted)}
+
+/* LOAD CHART */
+.chart-box{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:22px}
+.chart-box canvas{height:260px !important}
+
+/* MESOCYCLE CARDS */
+.mc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.mc-card{background:var(--card);border:1px solid var(--border);border-top:3px solid transparent;border-radius:var(--radius);padding:20px;cursor:pointer;transition:all 0.2s}
+.mc-card:hover{background:var(--card2);transform:translateY(-2px)}
+.mc-eyebrow{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;color:var(--muted);letter-spacing:0.12em;margin-bottom:5px}
+.mc-name{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;line-height:1.1;margin-bottom:7px}
+.mc-weeks{font-size:11px;color:var(--muted);margin-bottom:10px}
+.mc-desc{font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:10px}
+.mc-tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:12px}
+.mc-tag{font-size:10px;background:rgba(0,0,0,0.06);border-radius:4px;padding:2px 7px;color:var(--muted)}
+.mc-load-track{height:4px;background:rgba(0,0,0,0.07);border-radius:2px;overflow:hidden}
+.mc-load-fill{height:100%;border-radius:2px}
+.mc-load-label{font-size:10px;color:var(--muted);text-align:right;margin-top:4px}
+
+/* AGE GUARDRAILS */
+.age-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.age-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px}
+.age-div{font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:800;margin-bottom:2px}
+.age-sub{font-size:11px;color:var(--muted);margin-bottom:12px}
+.age-rule{font-size:11px;padding:6px 0;border-bottom:1px solid var(--border);display:flex;gap:8px;align-items:flex-start;line-height:1.45}
+.age-rule:last-child{border:none;padding-bottom:0}
+.age-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:5px}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:22px 28px;text-align:center;color:var(--muted);font-size:12px;line-height:1.8}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">HP</div>
+    <div class="logo-text">Houva Pipi <em>NC</em></div>
+  </div>
+  <nav>
+    <a href="#timeline-sec">Timeline</a>
+    <a href="#chart-sec">Load Curve</a>
+    <a href="#mc-sec">Mesocycles</a>
+    <a href="#age-sec">Age Groups</a>
+  </nav>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <h1>2026 Season <em>Periodization</em> Blueprint</h1>
+    <p class="subtitle">Master Plan · All Divisions · April 1 – August 22, 2026 · Port Moresby, Papua New Guinea</p>
+    <div class="stats-row">
+      <div class="stat-card"><div class="stat-num">21</div><div class="stat-desc">Total Weeks</div></div>
+      <div class="stat-card"><div class="stat-num">5</div><div class="stat-desc">Mesocycles</div></div>
+      <div class="stat-card"><div class="stat-num">42</div><div class="stat-desc">Training Sessions</div></div>
+      <div class="stat-card"><div class="stat-num">4</div><div class="stat-desc">Deload Weeks</div></div>
+      <div class="stat-card"><div class="stat-num">18</div><div class="stat-desc">Regular Season Matches</div></div>
+      <div class="stat-card"><div class="stat-num">60<small>min</small></div><div class="stat-desc">Per Session</div></div>
+    </div>
+  </div>
+</div>
+
+<main>
+
+  <!-- TIMELINE -->
+  <section id="timeline-sec">
+    <div class="section-header">
+      <h2>Macrocycle Timeline</h2>
+      <span class="chip clickable" onclick="document.getElementById('mc-panel').scrollIntoView({behavior:'smooth'})">↓ Click any week to zoom into microcycle</span>
+    </div>
+    <div class="timeline-wrapper">
+      <div class="tl-scroll">
+        <div class="tl-labels" id="tl-labels"></div>
+        <div class="tl-row" id="tl-row"></div>
+        <div class="phase-bar" id="phase-bar"></div>
+        <div class="tl-legend">
+          <div class="legend-item"><div class="legend-dot" style="background:var(--mc1)"></div>MC1 — Restore &amp; Stabilise</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--mc2)"></div>MC2 — Build &amp; Load</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--mc3)"></div>MC3 — Develop &amp; Sharpen</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--mc4)"></div>MC4 — Compete &amp; Consolidate</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--mc5)"></div>MC5 — Prime</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--finals)"></div>Finals Taper</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#374151"></div>Deload Week</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MICROCYCLE ZOOM PANEL -->
+    <div id="mc-panel">
+      <div class="panel-top">
+        <div>
+          <h3 id="p-title"></h3>
+          <div class="panel-focus" id="p-focus"></div>
+        </div>
+        <div class="panel-right">
+          <div id="p-badges"></div>
+          <button class="btn-close" onclick="closePanel()">✕ Close</button>
+        </div>
+      </div>
+      <div id="deload-banner"></div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+        <h2 style="font-size:17px;font-weight:700;font-family:'Barlow Condensed',sans-serif">Week Calendar</h2>
+        <span class="chip" id="p-chip"></span>
+      </div>
+      <div class="day-grid" id="day-grid"></div>
+      <h2 style="font-size:17px;font-weight:700;font-family:'Barlow Condensed',sans-serif;margin-bottom:14px">Training Session Detail <span style="font-size:13px;color:var(--muted);font-weight:400;font-family:'DM Sans',sans-serif">— Click a training day above to highlight its session</span></h2>
+      <div class="sessions-grid" id="sessions-grid"></div>
+    </div>
+  </section>
+
+  <!-- LOAD CURVE CHART -->
+  <section id="chart-sec">
+    <div class="section-header">
+      <h2>Volume &amp; Intensity Load Curve</h2>
+      <span class="chip">21-week season · Click any point to open that week</span>
+    </div>
+    <div class="chart-box">
+      <canvas id="load-chart"></canvas>
+    </div>
+  </section>
+
+  <!-- MESOCYCLE CARDS -->
+  <section id="mc-sec">
+    <div class="section-header">
+      <h2>Mesocycle Breakdown</h2>
+      <span class="chip clickable">Click a card to jump to that block</span>
+    </div>
+    <div class="mc-grid" id="mc-grid"></div>
+  </section>
+
+  <!-- AGE GUARDRAILS -->
+  <section id="age-sec">
+    <div class="section-header">
+      <h2>Age Group Adaptation Guardrails</h2>
+      <span class="chip" style="color:#ef4444;border-color:#ef444433">Mandatory reading for Junior coaches</span>
+    </div>
+    <div class="age-grid" id="age-grid"></div>
+  </section>
+
+</main>
+
+<footer>
+  Houva Pipi Netball Club · 2026 Season Master Blueprint · Port Moresby, Papua New Guinea<br>
+  Season: April 1 – August 22, 2026 · Divisions: U10 · U13 · U15 · U17 · U21 · Senior A &amp; B<br>
+  <span style="opacity:0.5">2 sessions/week (Court + Grass) · No gym access · 60 min per session · Low fitness baseline on entry</span>
+</footer>
+
+<script>
+// ─── DATA ───────────────────────────────────────────────────────────────────
+const MC_COL={1:'#10b981',2:'#3b82f6',3:'#f59e0b',4:'#ef4444',5:'#a855f7',6:'#06b6d4'};
+const MC_NAME={1:'Restore & Stabilise',2:'Build & Load',3:'Develop & Sharpen',4:'Compete & Consolidate',5:'Prime',6:'Finals Taper'};
+
+const WEEKS=[
+  {w:1, dates:'Apr 1–5',   mc:1,focus:'Movement quality · Aerobic base',          vol:72,int:22,deload:false},
+  {w:2, dates:'Apr 6–12',  mc:1,focus:'Stability · Mobility · Endurance',           vol:75,int:25,deload:false},
+  {w:3, dates:'Apr 13–19', mc:1,focus:'Aerobic capacity · Core stability',          vol:73,int:30,deload:false},
+  {w:4, dates:'Apr 20–26', mc:1,focus:'Active recovery · Skill review',             vol:40,int:20,deload:true},
+  {w:5, dates:'Apr 27–May 3',mc:2,focus:'Bodyweight strength intro · Agility',       vol:70,int:42,deload:false},
+  {w:6, dates:'May 4–10',  mc:2,focus:'Strength development · Court conditioning',  vol:73,int:48,deload:false},
+  {w:7, dates:'May 11–17', mc:2,focus:'Strength & agility load peak',               vol:78,int:52,deload:false},
+  {w:8, dates:'May 18–24', mc:2,focus:'Active recovery · Skill consolidation',      vol:42,int:40,deload:true},
+  {w:9, dates:'May 25–31', mc:3,focus:'Intro plyometrics · Speed work',             vol:68,int:60,deload:false},
+  {w:10,dates:'Jun 1–7',   mc:3,focus:'Power development · COD agility',            vol:72,int:68,deload:false},
+  {w:11,dates:'Jun 8–14',  mc:3,focus:'Speed & power peak · Tactical intensity',   vol:75,int:72,deload:false},
+  {w:12,dates:'Jun 15–21', mc:3,focus:'Active recovery · Power maintenance',        vol:38,int:55,deload:true},
+  {w:13,dates:'Jun 22–28', mc:4,focus:'Game-specific speed · Tactical complexity',  vol:68,int:78,deload:false},
+  {w:14,dates:'Jun 29–Jul 5',mc:4,focus:'Repeat sprint ability · Tactical shape',   vol:70,int:82,deload:false},
+  {w:15,dates:'Jul 6–12',  mc:4,focus:'Competitive intensity · Game readiness',     vol:72,int:85,deload:false},
+  {w:16,dates:'Jul 13–19', mc:4,focus:'Flush fatigue · Maintain sharpness',        vol:35,int:65,deload:true},
+  {w:17,dates:'Jul 20–26', mc:5,focus:'Maintain fitness · Reduce volume',           vol:55,int:80,deload:false},
+  {w:18,dates:'Jul 27–Aug 2',mc:5,focus:'Peak sharpness · Final tune-up',          vol:45,int:82,deload:false},
+  {w:19,dates:'Aug 3–9',   mc:6,focus:'Finals W1 · Activation + tactical review',  vol:25,int:70,deload:false,finals:true},
+  {w:20,dates:'Aug 10–16', mc:6,focus:'Finals W2 · Recovery + activation',          vol:15,int:58,deload:false,finals:true},
+  {w:21,dates:'Aug 17–22', mc:6,focus:'GRAND FINAL · August 22',                   vol:5, int:40,deload:false,finals:true},
+];
+
+const SESSIONS={
+  1:{
+    A:{title:'Court — Restore & Stabilise',sub:'60 min · Skills + tactical introduction + light conditioning',items:[
+      {l:'Warm-up',m:10,p:17,c:'#4b5563',d:'Dynamic stretch, joint mobility, easy ball work'},
+      {l:'Technical Skills',m:18,p:30,c:'#10b981',d:'Footwork mechanics, passing accuracy, basic positioning'},
+      {l:'Tactical Introduction',m:12,p:20,c:'#3b82f6',d:'Positional awareness, walk-through court patterns'},
+      {l:'On-Court Conditioning',m:10,p:17,c:'#f59e0b',d:'Low-intensity court movement, continuous running drills'},
+      {l:'Cool-down',m:10,p:17,c:'#4b5563',d:'Static stretch, breathing, session debrief'},
+    ]},
+    B:{title:'Grass — Restore & Stabilise',sub:'60 min · Stability + aerobic base + mobility work',items:[
+      {l:'Warm-up / Mobility',m:12,p:20,c:'#4b5563',d:'3 laps easy jog, hip circles, leg swings, arm circles'},
+      {l:'Stability & Core',m:15,p:25,c:'#10b981',d:'Planks, glute bridges, single-leg balance, dead bugs'},
+      {l:'Aerobic Base',m:18,p:30,c:'#3b82f6',d:'Easy continuous jog, shuttle walks, bodyweight squats'},
+      {l:'Mobility / Flexibility',m:10,p:17,c:'#8b5cf6',d:'Hip flexor, calf, hamstring holds — 45 sec each'},
+      {l:'Cool-down',m:5,p:8,c:'#4b5563',d:'Slow walk, breathing, recovery discussion'},
+    ]},
+  },
+  2:{
+    A:{title:'Court — Build & Load',sub:'60 min · Skills under pressure + small-sided games',items:[
+      {l:'Warm-up',m:10,p:17,c:'#4b5563',d:'Dynamic warm-up, progressive ball-handling'},
+      {l:'Technical Skills',m:15,p:25,c:'#3b82f6',d:'Skills under light defensive pressure, decision-making'},
+      {l:'Tactical Play',m:15,p:25,c:'#10b981',d:'Small-sided games (3v3, 4v4), structured patterns'},
+      {l:'On-Court Conditioning',m:12,p:20,c:'#f59e0b',d:'Court intervals: 20 sec work / 10 sec rest × 8'},
+      {l:'Cool-down',m:8,p:13,c:'#4b5563',d:'Static stretch, debrief'},
+    ]},
+    B:{title:'Grass — Build & Load',sub:'60 min · Bodyweight strength circuits + agility intro',items:[
+      {l:'Warm-up / Activation',m:10,p:17,c:'#4b5563',d:'Jog, dynamic mobility, glute walks, high knees'},
+      {l:'Bodyweight Strength',m:15,p:25,c:'#3b82f6',d:'Squat → Lunge → Push-up circuit (3 rounds, moderate pace)'},
+      {l:'Aerobic Capacity',m:12,p:20,c:'#10b981',d:'Tempo runs 200–400m, pyramid shuttles'},
+      {l:'Agility Introduction',m:13,p:22,c:'#f59e0b',d:'Cone ladder patterns, T-drills, side shuffles'},
+      {l:'Cool-down',m:10,p:17,c:'#4b5563',d:'Stretch, recovery breathwork'},
+    ]},
+  },
+  3:{
+    A:{title:'Court — Develop & Sharpen',sub:'60 min · High-pressure skills + tactical intensity + HIIT',items:[
+      {l:'Explosive Warm-up',m:10,p:17,c:'#4b5563',d:'Dynamic, bounding, quick feet, reactive starts'},
+      {l:'High-Pressure Skills',m:12,p:20,c:'#f59e0b',d:'Skills executed under fatigue or defensive challenge'},
+      {l:'Tactical Play',m:18,p:30,c:'#10b981',d:'Full court patterns, structured game-play (6v6)'},
+      {l:'HIIT Conditioning',m:12,p:20,c:'#ef4444',d:'15 sec max sprint / 15 sec rest — 10 reps'},
+      {l:'Cool-down',m:8,p:13,c:'#4b5563',d:'Static stretch, recovery shake-out'},
+    ]},
+    B:{title:'Grass — Develop & Sharpen',sub:'60 min · Plyometrics + sprint mechanics + reactive COD',items:[
+      {l:'Explosive Activation',m:10,p:17,c:'#4b5563',d:'Dynamic + A-skips, squat pulses, hip activation'},
+      {l:'Plyometrics / Power',m:15,p:25,c:'#f59e0b',d:'Squat jumps, broad jumps, lateral bounds, split squats'},
+      {l:'Sprint Mechanics',m:10,p:17,c:'#ef4444',d:'10m acceleration repeats, 20m build-up sprints'},
+      {l:'COD Agility',m:15,p:25,c:'#3b82f6',d:'Reactive agility: cone drills, mirror drills, partner reactions'},
+      {l:'Cool-down',m:10,p:17,c:'#4b5563',d:'Stretch, recovery walk'},
+    ]},
+  },
+  4:{
+    A:{title:'Court — Compete & Consolidate',sub:'60 min · Match simulation + repeat sprint protocol',items:[
+      {l:'Match Warm-up',m:10,p:17,c:'#4b5563',d:'Match-simulation warm-up: progressive intensity'},
+      {l:'Sharp Skills',m:10,p:17,c:'#ef4444',d:'Quick, sharp execution under match pressure'},
+      {l:'Match Simulation',m:20,p:33,c:'#10b981',d:'Full court match simulation (7v7 or game format)'},
+      {l:'Repeat Sprints',m:12,p:20,c:'#f59e0b',d:'5 × 20m sprints, 3 min full recovery between sets'},
+      {l:'Cool-down',m:8,p:13,c:'#4b5563',d:'Cold water if available, static stretch'},
+    ]},
+    B:{title:'Grass — Compete & Consolidate',sub:'60 min · Power maintenance + game-speed agility',items:[
+      {l:'Full Dynamic Warm-up',m:10,p:17,c:'#4b5563',d:'Full dynamic + explosive activation sequence'},
+      {l:'Power Maintenance',m:12,p:20,c:'#ef4444',d:'2 rounds plyometrics — quality over volume'},
+      {l:'Game-Speed Sprints',m:12,p:20,c:'#f59e0b',d:'5 × 10m reactive starts, 3 × 20m max effort'},
+      {l:'Netball Agility',m:15,p:25,c:'#3b82f6',d:'V-cuts, circle work, wing movement patterns with cones'},
+      {l:'Cool-down',m:11,p:18,c:'#4b5563',d:'Extended stretch, breathing'},
+    ]},
+  },
+  5:{
+    A:{title:'Court — Prime',sub:'60 min · Polished skills + finals set plays + light conditioning',items:[
+      {l:'Warm-up',m:10,p:17,c:'#4b5563',d:'Progressive, quality-focused warm-up'},
+      {l:'Polished Skills',m:15,p:25,c:'#a855f7',d:'Sharp, high-success skill execution — confidence building'},
+      {l:'Finals Set Plays',m:20,p:33,c:'#10b981',d:'Tactical set plays, scoring patterns, circle entries'},
+      {l:'Light Conditioning',m:10,p:17,c:'#f59e0b',d:'Reduced volume court conditioning — quality not quantity'},
+      {l:'Cool-down',m:5,p:8,c:'#4b5563',d:'Stretch, team debrief, mental prep talk'},
+    ]},
+    B:{title:'Grass — Prime (Reduced Volume)',sub:'40 min total · Activation-focused. Volume drops 40%.',items:[
+      {l:'Jog + Activation',m:5,p:13,c:'#4b5563',d:'Light easy jog, gentle activation — no load'},
+      {l:'Plyometrics (50%)',m:8,p:20,c:'#a855f7',d:'Quality jumps at 50% Phase 4 volume'},
+      {l:'Sharp Sprints',m:5,p:13,c:'#ef4444',d:'5 × 10m — brief, sharp, maximum quality focus'},
+      {l:'COD Agility',m:12,p:30,c:'#3b82f6',d:'Game-specific agility patterns — well-rested'},
+      {l:'Extended Cool-down',m:10,p:25,c:'#4b5563',d:'Thorough stretch, breathing, recovery preparation'},
+    ]},
+  },
+  6:{
+    A:{title:'Court — Finals Activation',sub:'60 min · Game-plan prep + confidence building + mental readiness',items:[
+      {l:'Gentle Warm-up',m:10,p:17,c:'#4b5563',d:'Gentle, progressive — no rushing, no intensity spikes'},
+      {l:'Finals Game-Plan',m:20,p:33,c:'#06b6d4',d:'Set plays, positional walkthrough, finals-specific tactics'},
+      {l:'Confidence Drills',m:20,p:33,c:'#10b981',d:'High-success rate drills — positive repetition only'},
+      {l:'Mental Preparation',m:10,p:17,c:'#a855f7',d:'Team talk, visualisation, cohesion activities'},
+    ]},
+    B:{title:'Grass — Activation Only',sub:'20 min max · Weeks 19–20. Week 21: rest completely.',items:[
+      {l:'Easy Jog',m:10,p:50,c:'#4b5563',d:'Light, easy jog — no physical load or demand'},
+      {l:'Jump Activation',m:5,p:25,c:'#06b6d4',d:'5–6 quality jumps — feel explosive, not fatigued'},
+      {l:'COD Activation',m:5,p:25,c:'#3b82f6',d:'2–3 short agility runs — done, go home and rest'},
+    ]},
+  },
+};
+
+const MC_CARDS=[
+  {mc:1,weeks:'1–4',  col:'#10b981',name:'Restore & Stabilise',   load:25,
+   desc:'Players return unfit. First priority is injury prevention and building tolerance before chasing performance.',
+   tags:['Aerobic base','Movement quality','Joint stability','Injury prevention']},
+  {mc:2,weeks:'5–8',  col:'#3b82f6',name:'Build & Load',           load:52,
+   desc:'Convert the aerobic base into functional strength and coordinated movement for netball demands.',
+   tags:['Muscular endurance','Landing mechanics','Agility intro','Aerobic capacity']},
+  {mc:3,weeks:'9–12', col:'#f59e0b',name:'Develop & Sharpen',      load:72,
+   desc:'Build explosive, reactive qualities that determine performance — first-step quickness, jump height, agility.',
+   tags:['Explosive power','Sprint speed','Change of direction','Game-intensity fitness']},
+  {mc:4,weeks:'13–16',col:'#ef4444',name:'Compete & Consolidate',  load:85,
+   desc:'All physical qualities expressed through game-relevant contexts. Coach shifts from developer to optimizer.',
+   tags:['Repeat sprint ability','Game-specific movement','Tactical sharpness','Match fitness peak']},
+  {mc:5,weeks:'17–18',col:'#a855f7',name:'Prime',                   load:80,
+   desc:'Reduce volume, preserve intensity. The fitness window is closed — do not attempt to add fitness here.',
+   tags:['Fitness maintenance','Neuromuscular freshness','Set play polish','Tactical confidence']},
+  {mc:6,weeks:'19–21',col:'#06b6d4',name:'Finals Taper',            load:30,
+   desc:"Remove fatigue so fitness built over 18 weeks can fully express itself on Grand Final day.",
+   tags:['Fatigue removal','Neural activation','Mental prep','Team cohesion']},
+];
+
+const AGE_RULES=[
+  {div:'U10',age:'9–10 yr',col:'#10b981',rules:[
+    'No plyometrics — replace with skipping, hopscotch, fun jumping games',
+    'Maximum 10m sprints only. No timed testing that creates anxiety.',
+    'Strength circuits → movement games (tag, relay races) that develop same qualities',
+    'Keep intensity LOW throughout the entire season without exception',
+    'Primary goal: FUNdamental movement skills — run, jump, land, throw, catch',
+  ]},
+  {div:'U13',age:'12–13 yr',col:'#3b82f6',rules:[
+    'Phase 3 plyometrics at 50% volume — squat jumps & broad jumps only, no depth jumps',
+    '10m sprints with 30+ sec full recovery between each rep — quality over quantity',
+    'Bodyweight strength: 2 rounds maximum (not 3 as per blueprint)',
+    'Reduce Phase 4 intensity to Phase 3 levels across the board',
+    'Primary goal: Multi-lateral athletic development before sport specialisation',
+  ]},
+  {div:'U15',age:'14–15 yr',col:'#f59e0b',rules:[
+    'Full plyometric protocol at 75% intensity — monitor landing mechanics closely',
+    'Full sprint protocol — actively screen for running asymmetries',
+    'Blueprint applies as written; monitor for mid-season growth spurts',
+    'If coordination temporarily regresses, reduce load immediately — this is PHV',
+  ]},
+  {div:'U17 & U21',age:'16–21 yr',col:'#a855f7',rules:[
+    'Apply full blueprint — post-peak height velocity, adult loading tolerated',
+    'Key factor is training age, not chronological age',
+    'A well-trained U17 can handle more than a returning U21 after a long break',
+    'Monitor life-stress fatigue (school exams) — adjust deloads if needed',
+  ]},
+  {div:'Senior A',age:'18+ yr',col:'#ef4444',rules:[
+    'Full blueprint as written — performance optimisation is the primary goal',
+    'Monitor recovery markers: soreness, mood, motivation, sleep quality',
+    'Deload weeks are non-negotiable — never override them regardless of pressure',
+  ]},
+  {div:'Senior B',age:'18+ yr',col:'#06b6d4',rules:[
+    'Full blueprint — consider life-stress fatigue very carefully in this cohort',
+    'Many Senior B players balance work and family with training commitments',
+    'Deload weeks are especially valuable — communicate openly about fatigue',
+  ]},
+];
+
+// ─── BUILD TIMELINE ────────────────────────────────────────────────────────
+function buildTimeline(){
+  const lblRow=document.getElementById('tl-labels');
+  const tlRow=document.getElementById('tl-row');
+  WEEKS.forEach(wk=>{
+    const lbl=document.createElement('div');
+    lbl.className='tl-label';
+    lbl.textContent='W'+wk.w;
+    lblRow.appendChild(lbl);
+
+    const blk=document.createElement('div');
+    blk.className='week-block'+(wk.deload?' deload':'');
+    blk.id='wb-'+wk.w;
+    if(!wk.deload) blk.style.background=MC_COL[wk.mc];
+    blk.innerHTML=`<span class="wnum">${wk.w}</span>${wk.deload?'<span class="wbadge">DELOAD</span>':wk.finals?'<span class="wbadge">FINALS</span>':''}`;
+    blk.title='Week '+wk.w+' · '+wk.dates+'\n'+wk.focus;
+    blk.addEventListener('click',()=>openPanel(wk.w));
+    tlRow.appendChild(blk);
+  });
+
+  const phases=[
+    {label:'MC1 — Foundation',span:4,col:'#10b981'},
+    {label:'MC2 — Build',span:4,col:'#3b82f6'},
+    {label:'MC3 — Develop',span:4,col:'#f59e0b'},
+    {label:'MC4 — Sharpen',span:4,col:'#ef4444'},
+    {label:'MC5',span:2,col:'#a855f7'},
+    {label:'Finals',span:3,col:'#06b6d4'},
+  ];
+  const pb=document.getElementById('phase-bar');
+  phases.forEach(p=>{
+    const s=document.createElement('div');
+    s.className='phase-seg';
+    s.style.cssText=`flex:${p.span};background:${p.col}18;color:${p.col};border:1px solid ${p.col}33`;
+    s.textContent=p.label;
+    pb.appendChild(s);
+  });
+}
+
+// ─── BUILD CHART ───────────────────────────────────────────────────────────
+function buildChart(){
+  const ctx=document.getElementById('load-chart').getContext('2d');
+  const mcBandPlugin={
+    id:'bands',
+    beforeDraw(chart){
+      const{ctx:c,chartArea:{left,right,top,bottom},scales:{x}}=chart;
+      [[0,3,'#10b981'],[4,7,'#3b82f6'],[8,11,'#f59e0b'],[12,15,'#ef4444'],[16,17,'#a855f7'],[18,20,'#06b6d4']]
+        .forEach(([f,t,col])=>{
+          const span=x.width/(WEEKS.length);
+          const x0=x.getPixelForValue(f)-span/2;
+          const x1=x.getPixelForValue(t)+span/2;
+          c.save();c.fillStyle=col+'12';c.fillRect(x0,top,x1-x0,bottom-top);c.restore();
+        });
+      [3,7,11,15].forEach(i=>{
+        const px=x.getPixelForValue(i);
+        c.save();c.strokeStyle='rgba(255,255,255,0.1)';c.setLineDash([4,4]);c.lineWidth=1;
+        c.beginPath();c.moveTo(px,top);c.lineTo(px,bottom);c.stroke();c.restore();
+      });
+    }
+  };
+  new Chart(ctx,{
+    type:'line',plugins:[mcBandPlugin],
+    data:{
+      labels:WEEKS.map(w=>'W'+w.w),
+      datasets:[
+        {label:'Volume (%)',data:WEEKS.map(w=>w.vol),borderColor:'#10b981',backgroundColor:'rgba(16,185,129,0.08)',
+         borderWidth:2.5,pointRadius:5,pointHoverRadius:8,tension:0.35,fill:true,
+         pointBackgroundColor:WEEKS.map(w=>w.deload?'#374151':'#10b981'),
+         pointBorderColor:WEEKS.map(w=>w.deload?'#6b7280':'#10b981'),
+         pointBorderWidth:2},
+        {label:'Intensity (%)',data:WEEKS.map(w=>w.int),borderColor:'#f59e0b',backgroundColor:'rgba(245,158,11,0.06)',
+         borderWidth:2.5,pointRadius:5,pointHoverRadius:8,tension:0.35,fill:true,
+         pointBackgroundColor:'#f59e0b',pointBorderColor:'#f59e0b',pointBorderWidth:2},
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      interaction:{mode:'index',intersect:false},
+      plugins:{
+        legend:{labels:{color:'#8896b3',font:{family:'DM Sans',size:12},boxWidth:14,padding:18}},
+        tooltip:{
+          backgroundColor:'#14233d',borderColor:'#1a2d4f',borderWidth:1,
+          titleColor:'#d8e0f0',bodyColor:'#8896b3',padding:12,
+          callbacks:{
+            title:items=>{const w=WEEKS[items[0].dataIndex];return 'Week '+w.w+' · '+w.dates},
+            afterTitle:items=>{const w=WEEKS[items[0].dataIndex];return w.deload?'⬇ DELOAD WEEK — Volume reduced':w.focus},
+            label:item=>item.dataset.label+': '+item.formattedValue+'%',
+          }
+        }
+      },
+      scales:{
+        x:{grid:{color:'rgba(255,255,255,0.04)'},ticks:{color:'#6b7ea0',font:{size:11},maxRotation:0}},
+        y:{min:0,max:100,grid:{color:'rgba(255,255,255,0.04)'},
+           ticks:{color:'#6b7ea0',font:{size:11},callback:v=>v+'%'}},
+      },
+      onClick(_,elements){
+        if(elements.length){openPanel(elements[0].index+1);document.getElementById('timeline-sec').scrollIntoView({behavior:'smooth'})}
+      }
+    }
+  });
+}
+
+// ─── BUILD MC CARDS ────────────────────────────────────────────────────────
+function buildMCCards(){
+  const g=document.getElementById('mc-grid');
+  MC_CARDS.forEach(mc=>{
+    const d=document.createElement('div');
+    d.className='mc-card';
+    d.style.borderTopColor=mc.col;
+    d.innerHTML=`
+      <div class="mc-eyebrow">${mc.mc<=5?'MESOCYCLE '+mc.mc:'FINALS TAPER'} · WEEKS ${mc.weeks}</div>
+      <div class="mc-name" style="color:${mc.col}">${mc.name}</div>
+      <div class="mc-weeks">Load target: ${mc.load}%</div>
+      <div class="mc-desc">${mc.desc}</div>
+      <div class="mc-tags">${mc.tags.map(t=>`<span class="mc-tag">${t}</span>`).join('')}</div>
+      <div class="mc-load-track"><div class="mc-load-fill" style="width:${mc.load}%;background:${mc.col}99"></div></div>
+      <div class="mc-load-label">${mc.load}% of peak load</div>`;
+    const firstWeek=parseInt(mc.weeks.split('–')[0]);
+    d.addEventListener('click',()=>{
+      openPanel(firstWeek);
+      setTimeout(()=>document.getElementById('timeline-sec').scrollIntoView({behavior:'smooth'}),50);
+    });
+    g.appendChild(d);
+  });
+}
+
+// ─── BUILD AGE GUARDRAILS ─────────────────────────────────────────────────
+function buildAgeCards(){
+  const g=document.getElementById('age-grid');
+  AGE_RULES.forEach(ag=>{
+    const d=document.createElement('div');
+    d.className='age-card';
+    d.style.borderTop=`3px solid ${ag.col}`;
+    d.innerHTML=`
+      <div class="age-div" style="color:${ag.col}">${ag.div}</div>
+      <div class="age-sub">Ages ${ag.age}</div>
+      ${ag.rules.map(r=>`<div class="age-rule"><div class="age-dot" style="background:${ag.col}88"></div><span>${r}</span></div>`).join('')}`;
+    g.appendChild(d);
+  });
+}
+
+// ─── PANEL LOGIC ──────────────────────────────────────────────────────────
+let activeW=null;
+
+function openPanel(n){
+  const wk=WEEKS[n-1];
+  activeW=n;
+  document.querySelectorAll('.week-block').forEach(b=>b.classList.remove('active'));
+  document.getElementById('wb-'+n).classList.add('active');
+
+  document.getElementById('p-title').textContent='Week '+n+' — '+wk.dates;
+  document.getElementById('p-focus').textContent=wk.focus;
+  document.getElementById('p-chip').textContent='Week '+n+' · '+MC_NAME[wk.mc];
+
+  document.getElementById('p-badges').innerHTML=`
+    <span class="pbadge" style="background:${MC_COL[wk.mc]}20;color:${MC_COL[wk.mc]};border:1px solid ${MC_COL[wk.mc]}44">${wk.mc<=5?'MC'+wk.mc:'Finals'}: ${MC_NAME[wk.mc]}</span>
+    ${wk.deload?`<span class="pbadge" style="background:#2d3a5099;color:#8896b3;border:1px solid #1a2d4f">⬇ DELOAD</span>`:''}
+    ${wk.finals?`<span class="pbadge" style="background:#06b6d420;color:#06b6d4;border:1px solid #06b6d444">🏆 FINALS</span>`:''}
+    <span class="pbadge" style="background:rgba(0,0,0,0.06);color:#5a6a8a;border:1px solid rgba(0,0,0,0.1)">Vol ${wk.vol}%</span>
+    <span class="pbadge" style="background:rgba(0,0,0,0.06);color:#5a6a8a;border:1px solid rgba(0,0,0,0.1)">Int ${wk.int}%</span>`;
+
+  document.getElementById('deload-banner').innerHTML=wk.deload?`
+    <div class="deload-banner">
+      <span style="font-size:18px">⬇</span>
+      <span><strong>Deload Week Active.</strong> Reduce grass session volume by 40%. Court session: skills + low-moderate intensity only. The Saturday match is already the high-intensity stimulus — training must complement, not compound, match-day stress.</span>
+    </div>`:'';
+
+  // Day grid
+  const col=MC_COL[wk.mc];
+  document.getElementById('day-grid').innerHTML=`
+    <div class="day-cell is-training" style="border-color:${col}55" onclick="highlightSession('A')">
+      <div class="day-name" style="font-size:10px;line-height:1.25;color:${col}">TRAINING<br>DAY 1</div>
+      <div class="day-icon" style="background:${col}18"><span style="color:${col}">A</span></div>
+      <div class="day-type" style="color:${col}">Court</div>
+      <div class="day-note">${wk.deload?'Reduced session':'Session A · 60 min'}</div>
+    </div>
+    <div class="day-cell is-training" style="border-color:${col}55" onclick="highlightSession('B')">
+      <div class="day-name" style="font-size:10px;line-height:1.25;color:${col}">TRAINING<br>DAY 2</div>
+      <div class="day-icon" style="background:${col}18"><span style="color:${col}">B</span></div>
+      <div class="day-type" style="color:${col}">Grass</div>
+      <div class="day-note">${wk.deload?'40% vol. reduction':'Session B · 60 min'}</div>
+    </div>
+    <div class="day-cell is-match">
+      <div class="day-name">SATURDAY</div>
+      <div class="day-icon" style="background:#c8870a18"><span style="color:#c8870a">M</span></div>
+      <div class="day-type" style="color:#c8870a">Match Day</div>
+      <div class="day-note">Full competitive effort</div>
+    </div>
+    <div class="rest-note">
+      <div class="rest-note-title">Other days — Rest &amp; Recovery</div>
+      <div class="rest-note-items">
+        <span>🔵 Pre-session days &mdash; light mobility, hydration, quality sleep</span>
+        <span>🟢 Post-session days &mdash; active recovery walk, foam rolling</span>
+        <span>🟡 Pre-match day (Fri) &mdash; mental prep only, no physical load</span>
+        <span>🔴 Post-match day (Sun) &mdash; full rest, nutrition &amp; rehydration</span>
+      </div>
+    </div>`;
+
+  // Sessions
+  const T=SESSIONS[wk.mc];
+  document.getElementById('sessions-grid').innerHTML=[
+    renderSess(T.A,'A',col,wk.deload),
+    renderSess(T.B,'B',col,wk.deload),
+  ].join('');
+
+  const panel=document.getElementById('mc-panel');
+  panel.style.display='block';
+  requestAnimationFrame(()=>{
+    panel.scrollIntoView({behavior:'smooth',block:'nearest'});
+  });
+}
+
+function renderSess(s,type,col,isDeload){
+  const items=isDeload&&type==='B'
+    ?[...s.items.slice(0,2),
+      {l:'Aerobic Work (40% vol.)',m:11,p:28,c:'#374151',d:'Reduced aerobic load — shorter distance, fewer reps'},
+      {l:'Extended Stretch',m:15,p:38,c:'#374151',d:'Extra mobility and flexibility work — deload adjustment'}]
+    :s.items;
+  const total=items.reduce((a,b)=>a+b.m,0);
+  return `<div class="session-card" id="sc-${type}">
+    <div class="s-title" style="color:${col}">${type==='A'?'📋 ':'🏃 '}${s.title}</div>
+    <div class="s-sub">${isDeload&&type==='B'?'⬇ Volume reduced 40% · Deload adjustment applied':s.sub}</div>
+    ${items.map(it=>`
+      <div class="si">
+        <div class="si-head">
+          <span class="si-label">${it.l}</span>
+          <span class="si-time">${it.m} min <span>(${it.p}%)</span></span>
+        </div>
+        <div class="si-bar"><div class="si-fill" style="width:${it.p}%;background:${it.c}"></div></div>
+        <div class="si-desc">${it.d}</div>
+      </div>`).join('')}
+    <div class="s-footer">
+      <span>Total: ${total} min</span>
+      <span style="color:${col}">${type==='A'?'Netball Court':'Grass / Turf Field'}</span>
+    </div>
+  </div>`;
+}
+
+function closePanel(){
+  document.getElementById('mc-panel').style.display='none';
+  document.querySelectorAll('.week-block').forEach(b=>b.classList.remove('active'));
+  activeW=null;
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────
+buildTimeline();
+buildChart();
+buildMCCards();
+buildAgeCards();
+</script>
+</body>
+</html>
